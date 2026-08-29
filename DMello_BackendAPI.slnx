@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="DMello.Api/DMello.Api.csproj" Id="5449438d-f6fc-40aa-8375-e7e8c9e7f5f7" />
+    <Project Path="DMello.Application/DMello.Application.csproj" Id="f374714c-c527-46c1-b353-f6f78f5c1074" />
+    <Project Path="DMello.Domain/DMello.Domain.csproj" Id="aaa7ad0e-2924-46fd-978e-88ef3fc58f4e" />
+    <Project Path="DMello.Infrastructure/DMello.Infrastructure.csproj" Id="e087f41f-9e03-41b2-87f4-ca418e8df074" />
+  </Folder>
+  <Project Path="DMello_BackendAPI/DMello_BackendAPI.csproj" />
+</Solution>

@@ -1,0 +1,17 @@
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\bin\Debug\net10.0\DMello.Application.deps.json
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\bin\Debug\net10.0\DMello.Application.runtimeconfig.json
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\bin\Debug\net10.0\DMello.Application.dll
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\bin\Debug\net10.0\DMello.Application.pdb
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.csproj.AssemblyReference.cache
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.AssemblyInfoInputs.cache
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.AssemblyInfo.cs
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.csproj.CoreCompileInputs.cache
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.dll
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\refint\DMello.Application.dll
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.pdb
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.Application.genruntimeconfig.cache
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\ref\DMello.Application.dll
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\bin\Debug\net10.0\DMello.Domain.dll
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\bin\Debug\net10.0\DMello.Domain.pdb
+C:\Ashwin\Kailash_Ji Work\Kailashji_Backend\DMello_BackendAPI\DMello.Application\obj\Debug\net10.0\DMello.A.66E5BC18.Up2Date

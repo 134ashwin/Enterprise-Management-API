@@ -1,0 +1,6 @@
+@DMello_BackendAPI_HostAddress = http://localhost:5148
+
+GET {{DMello_BackendAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
