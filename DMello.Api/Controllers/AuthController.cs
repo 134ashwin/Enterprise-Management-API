@@ -33,7 +33,7 @@ namespace DMello.Api.Controllers
         #endregion
 
         #region Refresh Token Login
-        [HttpPost("login")]
+        [HttpPost("refresh")]
         public async Task<IActionResult> Refresh_Token_Login([FromBody] LoginRequestDto request)
         {
             var response = await _authService.LoginAsync(request);
@@ -46,10 +46,10 @@ namespace DMello.Api.Controllers
                 HttpOnly = true,
                 Secure = true, // Set to true in HTTPS
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddHours(2)
+                Expires = DateTime.UtcNow.AddSeconds(10)
             });
 
-            return Ok(new { email = response });// we will not send email as response response.Email 
+            return Ok(new { message = "Token Refreshed Successfully"  });// we will not send email as response response.Email
         }
 
         #endregion
