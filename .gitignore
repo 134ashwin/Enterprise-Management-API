@@ -1,0 +1,22 @@
+﻿# Build output
+bin/
+obj/
+
+# Visual Studio temporary and workspace files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+DocumentLayoutBackup.json
+
+# Build/log files
+*.log
+*.cache
+
+# JetBrains / Rider
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
