@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace DMello.Application.Auth.DTOs
-{
-    public record LoginResponseDto(string Token);
+{//
+    public record LoginResponseDto(string AccessToken, string RefreshToken);
 }

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DMello.Application\DMello.Application.csproj" />
+    <ProjectReference Include="..\DMello.Infrastructure\DMello.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

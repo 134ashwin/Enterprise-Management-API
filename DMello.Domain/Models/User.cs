@@ -16,7 +16,12 @@ namespace DMello.Domain.Models
 
         [Required]
         public string PasswordHash { get; set; }
-        //public string? ResetToken { get; set; }
-        //public DateTime? ResetTokenExpiry { get; set; }
+
+        #region refreshTokenWork
+        // Refresh Token Persistence
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
+
+        #endregion
     }
 }

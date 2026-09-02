@@ -11,6 +11,6 @@ namespace DMello.Application.Common.Options
         public string Key { get; init; } = string.Empty;
         public string Issuer { get; init; } = string.Empty;
         public string Audience { get; init; } = string.Empty;
-        public int ExpiryInMinutes { get; init; } = 120;
+        public int ExpiryInSeconds { get; init; } = 10; // Expiry Minitues set to 30 sec so that refresh token gets active
     }
 }

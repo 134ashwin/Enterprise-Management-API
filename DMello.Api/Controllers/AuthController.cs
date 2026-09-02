@@ -20,39 +20,65 @@ namespace DMello.Api.Controllers
             _authService = authService;
         }
 
-        #region Normal ShortTerm Token login
+
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]LoginRequestDto request)
-        {
-            var response = await _authService.LoginAsync(request);
-            if (response == null)
-                return Unauthorized(new { message = "Invalid email or password" });
-
-            return Ok(response);
-        }
-        #endregion
-
-        #region Refresh Token Login
-        [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh_Token_Login([FromBody] LoginRequestDto request)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
             var response = await _authService.LoginAsync(request);
             if (response == null)
                 return Unauthorized(new { message = "Invalid credentials" });
 
-            // Set JWT in HttpOnly Cookie
-            Response.Cookies.Append("X-Access-Token", response.Token, new CookieOptions
+            // 1. Set Short-Lived Access Token Cookie (15 mins in prod, 10s in test)
+            Response.Cookies.Append("X-Access-Token", response.AccessToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true, // Set to true in HTTPS
+                Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddSeconds(10)
+                Expires = DateTime.UtcNow.AddSeconds(10) // 10s testing window
             });
 
-            return Ok(new { message = "Token Refreshed Successfully"  });// we will not send email as response response.Email
+            // 2. Set Long-Lived Refresh Token Cookie (7 Days)
+            Response.Cookies.Append("X-Refresh-Token", response.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+
+            return Ok(new { message = "Login successful" });
         }
 
-        #endregion
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh_Token_Login()
+        {
+            // 1. Extract raw refresh token from HttpOnly cookie
+            var rawRefreshToken = Request.Cookies["X-Refresh-Token"];
+
+            if (string.IsNullOrEmpty(rawRefreshToken))
+            {
+                return Unauthorized(new { message = "Refresh token cookie missing" });
+            }
+
+            // 2. Validate token against DB and generate new Access Token
+            var response = await _authService.RefreshTokenAsync(rawRefreshToken);
+            if (response == null)
+            {
+                return Unauthorized(new { message = "Invalid or expired refresh token" });
+            }
+
+            // 3. Append updated Access Token cookie to response
+            Response.Cookies.Append("X-Access-Token", response.AccessToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddSeconds(10) // 10s for testing
+            });
+
+            return Ok(new { message = "Token Refreshed Successfully" });
+        }
+
 
         #region New User Registration
         [HttpPost("register")]

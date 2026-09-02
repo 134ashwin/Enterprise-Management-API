@@ -9,5 +9,7 @@ namespace DMello.Application.Common.Interfaces
     {
         // Generates a signed JWT bearer token string for an authenticated user
         string GenerateToken(User user);
+
+        string GenerateRefreshToken();
     }
 }

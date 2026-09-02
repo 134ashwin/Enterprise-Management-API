@@ -48,6 +48,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero, // For Expiring Access Token in 10 secs, it is temporary and must be only used for testing
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
@@ -64,6 +65,19 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+#region CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Required for HttpOnly cookies
+    });
+});
+#endregion
 
 
 var app = builder.Build();
@@ -85,7 +99,7 @@ if (app.Environment.IsDevelopment())
 #endregion
 
 //app.UseHttpsRedirection();
-
+app.UseCors("AllowAngular");
 app.UseAuthorization();
 
 app.MapControllers();

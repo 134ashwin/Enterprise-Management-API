@@ -1,4 +1,7 @@
-﻿using DMello.Domain.Models;
+﻿using System.Security.Cryptography;
+using DMello.Application.Common.Interfaces; // Now the JwtService is depends on IJwtService of Application Layer
+using DMello.Application.Common.Options; // Now The Infrastrucutre Depends on Application
+using DMello.Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -6,8 +9,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DMello.Application.Common.Options; // Now The Infrastrucutre Depends on Application
-using DMello.Application.Common.Interfaces; // Now the JwtService is depends on IJwtService of Application Layer
 
 
 namespace DMello.Infrastructure.Authentication
@@ -37,11 +38,22 @@ namespace DMello.Infrastructure.Authentication
                 issuer: _jwtOptions.Issuer,
                 audience: _jwtOptions.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryInMinutes),
+                expires: DateTime.UtcNow.AddSeconds(_jwtOptions.ExpiryInSeconds),
                 signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+
+        // 2. Generate Refresh Token (Long-Lived: 7 days)
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64]; // 64 bytes = high security entropy
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
         }
     }
 }

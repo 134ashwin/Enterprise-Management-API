@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DMello.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a95bccc19de8f4104f30ba394aa42ce8b669c16")]
 [assembly: System.Reflection.AssemblyProductAttribute("DMello.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DMello.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

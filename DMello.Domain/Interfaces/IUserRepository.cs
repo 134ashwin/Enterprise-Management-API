@@ -9,8 +9,10 @@ namespace DMello.Domain.Interfaces
     {
         #region Login Part 
         Task<User?> GetByEmailAsync(string email);
-        Task<bool> IsEmailDuplicateAsync(string email);
+        Task<User?> GetByRefreshTokenAsync(string refreshToken); 
         Task AddAsync(User user);
+        Task UpdateAsync(User user); 
+        Task<bool> IsEmailDuplicateAsync(string email);
         #endregion
 
         #region ForgotPassword Things

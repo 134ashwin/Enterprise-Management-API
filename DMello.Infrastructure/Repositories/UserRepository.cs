@@ -39,6 +39,23 @@ namespace DMello.Infrastructure.Repositories
 
         #endregion
 
+        #region RefreshToken Part 
+        public async Task<User?> GetByRefreshTokenAsync(string refreshToken)
+        {
+            // Queries the Users table for a matching refresh token string
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+        }
+
+        public async Task UpdateAsync(User user)
+        {
+            // Tracks state changes on the user entity and persists them to SQL Server
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
+        #endregion
+
         #region ForgotPassword Things
 
         public async Task SaveResetTokenAsync(int userId, string token, DateTime expiry)
@@ -65,7 +82,6 @@ namespace DMello.Infrastructure.Repositories
         }
 
         #endregion
-
 
     }
 }

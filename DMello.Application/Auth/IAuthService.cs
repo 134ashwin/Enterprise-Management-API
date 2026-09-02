@@ -9,6 +9,7 @@ namespace DMello.Application.Auth
     public interface IAuthService
     {
         Task<LoginResponseDto?> LoginAsync(LoginRequestDto request);
-        Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto request);
+        Task<LoginResponseDto?> RefreshTokenAsync(string refreshToken);
+        Task<RegisterResponseDto?> RegisterAsync(RegisterRequestDto request);
     }
 }
