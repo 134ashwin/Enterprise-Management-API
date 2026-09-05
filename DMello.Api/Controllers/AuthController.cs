@@ -53,27 +53,36 @@ namespace DMello.Api.Controllers
         public async Task<IActionResult> Refresh_Token_Login()
         {
             // 1. Extract raw refresh token from HttpOnly cookie
-            var rawRefreshToken = Request.Cookies["X-Refresh-Token"];
+            var OldrawRefreshToken = Request.Cookies["X-Refresh-Token"];
 
-            if (string.IsNullOrEmpty(rawRefreshToken))
+            if (string.IsNullOrEmpty(OldrawRefreshToken))
             {
                 return Unauthorized(new { message = "Refresh token cookie missing" });
             }
 
             // 2. Validate token against DB and generate new Access Token
-            var response = await _authService.RefreshTokenAsync(rawRefreshToken);
+            var response = await _authService.RefreshTokenAsync(OldrawRefreshToken);
             if (response == null)
             {
                 return Unauthorized(new { message = "Invalid or expired refresh token" });
             }
 
-            // 3. Append updated Access Token cookie to response
+            // 3. Append updated **New** Access Token cookie to response
             Response.Cookies.Append("X-Access-Token", response.AccessToken, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
                 Expires = DateTime.UtcNow.AddSeconds(10) // 10s for testing
+            });
+
+            // 4. ROTATION: Append **NEW** Refresh Token cookie (overwrites the old one)
+            Response.Cookies.Append("X-Refresh-Token", response.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
             });
 
             return Ok(new { message = "Token Refreshed Successfully" });
