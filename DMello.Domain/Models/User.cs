@@ -10,7 +10,6 @@ namespace DMello.Domain.Models
     public class User
     {
         public int Id { get; set; }
-
         [Required]
         public string Email { get; set; }
 
@@ -21,7 +20,6 @@ namespace DMello.Domain.Models
         // Refresh Token Persistence
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
-
         #endregion
     }
 }

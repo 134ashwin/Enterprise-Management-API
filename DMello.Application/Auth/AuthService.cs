@@ -35,26 +35,32 @@ namespace DMello.Application.Auth
 
             // 1. Generate Tokens
             var accessToken = _jwtService.GenerateToken(user);
-            var refreshToken = _jwtService.GenerateRefreshToken();
+            var rawRefreshToken = _jwtService.GenerateRefreshToken(); // Uses RandomNumberGenerator
 
             // 2. Save Refresh Token to Database
-            user.RefreshToken = refreshToken;
+            user.RefreshToken = rawRefreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             await _userRepo.UpdateAsync(user);
 
             // 3. Return DTO with both parameters
-            return new LoginResponseDto(accessToken, refreshToken);
+            return new LoginResponseDto(accessToken, rawRefreshToken);
         }
 
-        public async Task<LoginResponseDto?> RefreshTokenAsync(string refreshToken)
+        public async Task<LoginResponseDto?> RefreshTokenAsync(string incomingRawRefreshTokenSentByBrowser) // sent via HttpONly Cookiee
         {
-            // 1. Look up user by RefreshToken in DB
-            var user = await _userRepo.GetByRefreshTokenAsync(refreshToken);
+            // 1. Finding a user by RefreshToken in database, so that we can delete existing refresh token and generate new one after few days
+            var user = await _userRepo.GetByRefreshTokenAsync(incomingRawRefreshTokenSentByBrowser);
 
             // 2. Validate token existence and expiry date stored in DB
             if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
                 return null; // Invalid or expired refresh token
+            }
+
+            bool isValid = BCrypt.Net.BCrypt.Verify(incomingRawRefreshTokenSentByBrowser, user.RefreshToken);
+            if (!isValid)
+            {
+                return null; // Stolen or manipulated token
             }
 
             // 3. Generate NEW Access Token AND NEW Refresh Token (Token Rotation)
