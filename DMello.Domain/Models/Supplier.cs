@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMello.Domain.Enums
+namespace DMello.Domain.Models
 {
-    public enum OrderStatus
+    public class Supplier
     {
 
     }
