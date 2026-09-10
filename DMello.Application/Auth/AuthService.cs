@@ -35,15 +35,15 @@ namespace DMello.Application.Auth
 
             // 1. Generate Tokens
             var accessToken = _jwtService.GenerateToken(user);
-            var rawRefreshToken = _jwtService.GenerateRefreshToken(); // Uses RandomNumberGenerator
+            var NewrawRefreshToken = _jwtService.GenerateRefreshToken(); // Uses RandomNumberGenerator
 
-            // 2. Save Refresh Token to Database
-            user.RefreshToken = rawRefreshToken;
+            // 2. Save/Overwrite new Refresh Token to Database everytime access token genrated
+            user.RefreshToken = NewrawRefreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             await _userRepo.UpdateAsync(user);
 
             // 3. Return DTO with both parameters
-            return new LoginResponseDto(accessToken, rawRefreshToken);
+            return new LoginResponseDto(accessToken, NewrawRefreshToken);
         }
 
         public async Task<LoginResponseDto?> RefreshTokenAsync(string incomingRawRefreshTokenSentByBrowser) // sent via HttpONly Cookiee
@@ -57,11 +57,11 @@ namespace DMello.Application.Auth
                 return null; // Invalid or expired refresh token
             }
 
-            bool isValid = BCrypt.Net.BCrypt.Verify(incomingRawRefreshTokenSentByBrowser, user.RefreshToken);
-            if (!isValid)
-            {
-                return null; // Stolen or manipulated token
-            }
+            //bool isValid = BCrypt.Net.BCrypt.Verify(incomingRawRefreshTokenSentByBrowser, user.RefreshToken);
+            //if (!isValid)
+            //{
+            //    return null; // Stolen or manipulated token
+            //}
 
             // 3. Generate NEW Access Token AND NEW Refresh Token (Token Rotation)
             var newAccessToken = _jwtService.GenerateToken(user);

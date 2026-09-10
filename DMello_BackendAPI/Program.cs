@@ -74,7 +74,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); // Required for HttpOnly cookies
+              .AllowCredentials(); // <--- CRITICAL: Allows browser to send HttpOnly cookies
     });
 });
 #endregion
@@ -98,6 +98,7 @@ if (app.Environment.IsDevelopment())
 }
 #endregion
 
+app.UseRouting();
 //app.UseHttpsRedirection();
 app.UseCors("AllowAngular");
 app.UseAuthorization();

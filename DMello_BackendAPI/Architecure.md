@@ -2,57 +2,80 @@
     
 
 
-Folder Str : 
-
 MyCompany.DMello/
 │
 ├── src/
 │   │
-│   ├── MyProject.Domain/                     # Core Business Entities & Interfaces
+│   ├── DMello.Domain/                     # Core Business Entities & Domain Rules
 │   │   ├── Entities/
-│   │   │   └── User.cs                       # Added: ResetToken, ResetTokenExpiry
+│   │   │   ├── User.cs                       # User Auth Entity
+│   │   │   ├── Supplier.cs                   # [NEW] Vendor/Supplier Entity
+│   │   │   ├── InventoryItem.cs              # [NEW] Raw Materials & Finished Goods Master
+│   │   │   ├── ProductionProcess.cs          # [NEW] Printing, Dyeing, Stitching, Washing tasks
+│   │   │   └── InventoryMovementLog.cs       # [NEW] Ledger table tracking stock movements
+│   │   │
+│   │   ├── Enums/                            # [NEW] Core Business State Definitions
+│   │   │   ├── MovementType.cs               # [NEW] SupplierToRaw, ProductToProduction, etc.
+│   │   │   ├── ProductionProcessType.cs      # [NEW] Printing, Dyeing, Stitching, Washing
+│   │   │   ├── ItemCategoryType.cs           # [NEW] RawMaterial, WorkInProgress, FinishedGood
+│   │   │   └── OrderStatus.cs                # [NEW] Pending, Completed, Shipped
+│   │   │
 │   │   └── Interfaces/
-│   │       └── IUserRepository.cs            # Added: SaveResetTokenAsync, UpdatePasswordAsync, IsEmailDuplicateAsync
+│   │       ├── IUserRepository.cs            
+│   │       ├── IInventoryRepository.cs       # [NEW] Stock movement queries
+│   │       └── IProductionRepository.cs      # [NEW] Production tracking queries
 │   │
-│   ├── MyProject.Application/                # Business Logic & Interfaces
+│   ├── DMello.Application/                # Business Logic & Orchestration
 │   │   ├── Auth/
 │   │   │   ├── DTOs/
 │   │   │   │   ├── LoginRequestDto.cs           
 │   │   │   │   ├── LoginResponseDto.cs          
-│   │   │   │   ├── RegisterRequestDto.cs        # [NEW] Registration payload
-│   │   │   │   ├── RegisterResponseDto.cs       # [NEW] Registration response
-│   │   │   │   ├── ForgotPasswordRequest.cs  # [NEW] Forgot password request payload
-│   │   │   │   └── ResetPasswordRequest.cs   # [NEW] Password reset payload
-│   │   │   ├── IAuthService.cs               # Updated: Register, ForgotPassword, ResetPassword signatures
-│   │   │   └── AuthService.cs                # Updated: Implements IAuthService (BCrypt integration)
+│   │   │   │   ├── RegisterRequestDto.cs        
+│   │   │   │   ├── RegisterResponseDto.cs       
+│   │   │   │   ├── ForgotPasswordRequest.cs  
+│   │   │   │   └── ResetPasswordRequest.cs   
+│   │   │   ├── IAuthService.cs               
+│   │   │   └── AuthService.cs                
+│   │   │
+│   │   ├── Inventory/                        # [NEW] Manufacturing & Stock Use-Cases
+│   │   │   ├── DTOs/
+│   │   │   │   ├── CreateMovementDto.cs
+│   │   │   │   └── InventoryItemResponseDto.cs
+│   │   │   ├── Services/
+│   │   │   │   ├── IInventoryService.cs
+│   │   │   │   └── InventoryService.cs
 │   │   │
 │   │   └── Common/
 │   │       ├── Interfaces/
-│   │       │   └── IJwtService.cs            # [NEW] Contract for JWT generation (Decouples Application from Infrastructure)
+│   │       │   └── IJwtService.cs            
 │   │       └── Options/
-│   │           └── JwtOptions.cs             # [NEW] Strongly-typed model for Jwt settings in appsettings.json
+│   │           └── JwtOptions.cs             
 │   │
-│   ├── MyProject.Infrastructure/             # DB & External Implementations
+│   ├── DMello.Infrastructure/             # DB & External System Implementations
 │   │   ├── Data/
-│   │   │   └── ApplicationDbContext.cs       
+│   │   │   ├── ApplicationDbContext.cs       # Updated with new DbSets & Enum Conversions
+│   │   │   └── Configurations/               # [NEW] EF Core Entity Configurations
+│   │   │       ├── InventoryItemConfig.cs    
+│   │   │       └── MovementLogConfig.cs      
 │   │   ├── Repositories/
-│   │   │   └── UserRepository.cs             # Updated: Implements new token reset & duplicate email queries
+│   │   │   ├── UserRepository.cs             
+│   │   │   ├── InventoryRepository.cs        # [NEW]
+│   │   │   └── ProductionRepository.cs       # [NEW]
 │   │   └── Authentication/
-│   │       └── JwtService.cs                 # Updated: Implements IJwtService & consumes IOptions<JwtOptions>
+│   │       └── JwtService.cs                 
 │   │
-│   └── MyProject.Api/                        # Web API Layer
+│   └── DMello.Api/                        # Web API Controllers
 │       ├── Controllers/
-│       │   └── AuthController.cs            # Updated: Added /register, /forgot-password, /reset-password endpoints
+│       │   ├── AuthController.cs            
+│       │   ├── InventoryController.cs        # [NEW] Endpoints for Stock movements
+│       │   └── ProductionController.cs       # [NEW] Endpoints for Dyeing/Washing/Stitching
 │       ├── Middleware/
-│       ├── appsettings.json                  # Updated: Actual 256-bit Jwt:Key, Issuer, and Audience values
-│       └── Program.cs                        # Updated: AddJwtBearer, builder.Services.Configure<JwtOptions>
+│       ├── appsettings.json                  
+│       └── Program.cs                        
 │
 └── tests/
     ├── MyProject.UnitTests/
     └── MyProject.IntegrationTests/
-
-
-
 
 
 

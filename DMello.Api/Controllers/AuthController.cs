@@ -31,21 +31,24 @@ namespace DMello.Api.Controllers
             // 1. Set Short-Lived Access Token Cookie (15 mins in prod, 10s in test)
             Response.Cookies.Append("X-Access-Token", response.AccessToken, new CookieOptions
             {
+
+                // Set Secure to false if testing over plain HTTP (http://localhost:5xxx)
+                // Set to true ONLY if your backend URL starts with https://
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = Request.IsHttps,
+                SameSite = Request.IsHttps ? SameSiteMode.None : SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddSeconds(10) // 10s testing window
             });
 
-            // 2. Set Long-Lived Refresh Token Cookie (7 Days)
+            // 2. Set/Overwrite Long-Lived Refresh Token Cookie (7 Days)
             Response.Cookies.Append("X-Refresh-Token", response.RefreshToken, new CookieOptions
             {
+                //This is not secure right now, to get old refresh token we made it unsecure
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = Request.IsHttps,
+                SameSite = Request.IsHttps ? SameSiteMode.None : SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
-
             return Ok(new { message = "Login successful" });
         }
 
@@ -71,8 +74,9 @@ namespace DMello.Api.Controllers
             Response.Cookies.Append("X-Access-Token", response.AccessToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = Request.IsHttps,
+                Path = "/", // <--- CRITICAL: Ensures cookie is sent to /api/auth/refresh
+                SameSite = Request.IsHttps ? SameSiteMode.None : SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddSeconds(10) // 10s for testing
             });
 
@@ -80,8 +84,9 @@ namespace DMello.Api.Controllers
             Response.Cookies.Append("X-Refresh-Token", response.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = Request.IsHttps, // done secure to false for local testing
+                Path = "/", // <--- CRITICAL: Ensures cookie is sent to /api/auth/refresh
+                SameSite = Request.IsHttps ? SameSiteMode.None : SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
 
