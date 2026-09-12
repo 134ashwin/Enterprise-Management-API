@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
+
+//Why it exists: Represents the SalesOrders table in SQL Server.
+
+//What problem it solves: Stores the exact fields required by Angular UI
+//(Date, OrderNo, MainSKU, SubSKU, Size, Customer, Description).
+
 namespace DMello.Domain.Models
 {
     public class SalesOrdersModel
@@ -19,7 +25,3 @@ namespace DMello.Domain.Models
 }
 
 
-//Why it exists: Represents the SalesOrders table in SQL Server.
-
-//What problem it solves: Stores the exact fields required by your Angular UI
-//(Date, OrderNo, MainSKU, SubSKU, Size, Customer, Description).

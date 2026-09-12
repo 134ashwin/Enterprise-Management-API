@@ -17,6 +17,7 @@ namespace DMello.Infrastructure.Data
 
         // Add your DbSets here (tables)
         public DbSet<User> Users => Set<User>();
+        public DbSet<SalesOrdersModel> SalesOrders => Set<SalesOrdersModel>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,16 @@ namespace DMello.Infrastructure.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(u => u.Email).IsUnique();
+            });
+
+            // Configure SalesOrder indexes and constraints
+            modelBuilder.Entity<SalesOrdersModel>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.OrderNo).IsUnique(); // Ensures OrderNo cannot be duplicated
+                entity.Property(e => e.OrderNo).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.MainSku).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Customer).IsRequired().HasMaxLength(150);
             });
         }
     }
