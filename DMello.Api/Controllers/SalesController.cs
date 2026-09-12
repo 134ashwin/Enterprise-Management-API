@@ -1,13 +1,11 @@
-﻿namespace MyProject.Api.Controllers;
+﻿namespace DMello.Api.Controllers;
 
 using DMello.Application.Sales.DTOs;
 using DMello.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DMello.Application.Sales.DTOs;
 using DMello.Domain.Models;
-using DMello.Infrastructure.Data;
 
 [Authorize]
 [ApiController]
