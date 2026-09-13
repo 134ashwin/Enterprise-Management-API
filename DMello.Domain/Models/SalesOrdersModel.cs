@@ -20,7 +20,6 @@ namespace DMello.Domain.Models
         public string Size { get; set; } = string.Empty;     // Size
         public string Customer { get; set; } = string.Empty; // Customer
         public string Description { get; set; } = string.Empty; // Description
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
 

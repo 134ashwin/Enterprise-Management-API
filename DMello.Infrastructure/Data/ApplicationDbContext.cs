@@ -36,7 +36,7 @@ namespace DMello.Infrastructure.Data
             modelBuilder.Entity<SalesOrdersModel>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.OrderNo).IsUnique(); // Ensures OrderNo cannot be duplicated
+                entity.HasIndex(e => e.OrderNo); // Ensures OrderNo cannot be duplicated
                 entity.Property(e => e.OrderNo).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.MainSku).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Customer).IsRequired().HasMaxLength(150);
